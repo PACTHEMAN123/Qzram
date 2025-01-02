@@ -1,0 +1,23 @@
+# 忽略构建生成的文件和目录
+*.o
+*.ko
+*.mod.*
+*.cmd
+*.symvers
+*.order
+*.markers
+
+# 忽略临时文件
+.*.cmd
+*.tmp
+
+# 忽略编译过程中创建的目录
+.tmp_versions/
+modules.order
+
+# 忽略通用二进制文件
+*.bin
+*.elf
+
+# 忽略内核构建日志
+*.log
