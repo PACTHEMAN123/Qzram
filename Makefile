@@ -9,12 +9,12 @@ KDIR := /usr/lib/modules/5.15.0-126-generic/build/
 
 obj-m := $(NAME).o
 
-$(NAME)-objs := zcomp.o zram_drv.o
+$(NAME)-objs := zcomp.o zram_drv.o qatcomp.o
 
 PWD := $(shell pwd)
 
 build:
-	$(MAKE) -C $(KDIR) M=$(PWD) modules
+	$(MAKE) -C $(KDIR) M=$(PWD) modules EXTRA_LDFLAGS=-L/usr/local/lib/ -lqatzip
 
 clean: 
 	$(MAKE) -C $(KDIR) M=$(PWD) clean
