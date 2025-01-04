@@ -4,8 +4,8 @@
 #obj-$(CONFIG_ZRAM)	+=	zram.o
 
 
-NAME = myzram
-KDIR := /usr/lib/modules/5.15.0-126-generic/build/
+NAME = qzram
+KDIR := /usr/lib/modules/`uname -r`/build/
 
 obj-m := $(NAME).o
 
