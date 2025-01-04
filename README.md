@@ -8,9 +8,9 @@ Linux 内核中的内存缓存机制`zram`是将匿名页压缩后进行保存�
 
 ## Introduction
 
-我们利用了 Intel&reg; 机器的特性，使用 Intel&reg; QuickAssist Technology (QAT) 的硬件支持来加速压缩。将原 `zram` 的部分压缩算法使用 QATzip 加速。
+我们利用了 Intel&reg; 机器的特性，使用 Intel&reg; QuickAssist Technology (QAT) 的硬件支持来增强压缩效果。将原 `zram` 的部分压缩算法使用 QATzip 加速。
 
-## 使用方法
+## 安装方法
 
 ### 1.克隆本项目至本地
 ```bash
@@ -37,7 +37,8 @@ make
 make clean
 ```
 
-加入模块
+### 4.基本使用
+加入模块，默认创建一个`zram`设备：使用`lz4`算法压缩、8G大小、作为系统内最高优先级的交换空间
 ```bash
 make insmod
 ```
@@ -46,6 +47,15 @@ make insmod
 ```bash
 make rmmod
 ```
+
+[基本用法](https://docs.kernel.org/admin-guide/blockdev/zram.html)和原来的`zram`保持一致，因为我们只对压缩的部分进行了处理。
+
+
+
+
+
+
+
 
 
 
