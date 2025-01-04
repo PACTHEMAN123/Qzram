@@ -50,7 +50,13 @@ make rmmod
 
 [基本用法](https://docs.kernel.org/admin-guide/blockdev/zram.html)和原来的`zram`保持一致，因为我们只对压缩的部分进行了处理。
 
+## 项目文档
 
+[关键代码](docs/key.md)
+
+[测试部分](docs/test.md)
+
+[开发总结](docs/develop.md)
 
 
 
