@@ -9,7 +9,7 @@ KDIR := /usr/lib/modules/5.15.0-126-generic/build/
 
 obj-m := $(NAME).o
 
-$(NAME)-objs := zcomp.o zram_drv.o qatcomp.o
+$(NAME)-objs := zcomp.o zram_drv.o qat.o qat-lz4.o
 
 PWD := $(shell pwd)
 

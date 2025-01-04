@@ -14,7 +14,7 @@
 
 #include "zcomp.h"
 
-#include "qatcomp.h"
+#include "qat.h"
 
 static const char * const backends[] = {
 #if IS_ENABLED(CONFIG_CRYPTO_LZO)
@@ -142,7 +142,8 @@ int zcomp_compress(struct zcomp_strm *zstrm,
 	*dst_len = PAGE_SIZE * 2;
 
 	return qatCompress(zstrm->tfm, 
-			src, zstrm->buffer, dst_len);
+			src, PAGE_SIZE,
+			zstrm->buffer, dst_len);
 /*
 	return crypto_comp_compress(zstrm->tfm,
 			src, PAGE_SIZE,
