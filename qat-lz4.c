@@ -17,17 +17,16 @@
 
 #define APPNAME "/usr/local/bin/qzip"  // 用户态程序的路径
 
-long long countIndex = 0;
-char* fileNameTemplate = "/dev/shm/tempPage%lu";
-char* fileNameTemplatelz4 = "/dev/shm/tempPage%lu.lz4";
+char* fileNameTemplate = "/dev/shm/tempPage%d";
+char* fileNameTemplatelz4 = "/dev/shm/tempPage%d.lz4";
 
-//#define TEST
+#define TEST
 
 
 // 注意output这个buffer需要提前准备好，大小可以设置为页面的大小
 int lz4compression(char* input, int input_len, char* output, int* output_len) {
     int ret;
-    long long currentIndex = countIndex++;
+    
     char* fileName = (char*)kmalloc(100, GFP_KERNEL);
     if (!fileName) {
         printk(KERN_ERR "Failed to allocate memory for fileName\n");
@@ -39,8 +38,10 @@ int lz4compression(char* input, int input_len, char* output, int* output_len) {
         kfree(fileName);
         return -ENOMEM;
     }
-    sprintf(fileName, fileNameTemplate, currentIndex);
-    sprintf(fileNamelz4, fileNameTemplatelz4, currentIndex);
+
+    pid_t pid = current->pid;
+    sprintf(fileName, fileNameTemplate, pid);
+    sprintf(fileNamelz4, fileNameTemplatelz4, pid);
     char *argv[] = {APPNAME, "-O", "lz4", fileName, "-o", fileName, NULL};  // 用户态程序参数
 
 #ifdef TEST
@@ -131,11 +132,6 @@ int lz4compression(char* input, int input_len, char* output, int* output_len) {
 // 注意output这个buffer需要提前准备好，大小可以设置为页面的大小
 int lz4decompression(char* input, int input_len, char* output, int* output_len) {
     int ret;
-    long long currentIndex = countIndex++;
-
-#ifdef TEST
-    printk(KERN_INFO "decompression: currentIndex=%u\n", currentIndex);
-#endif
 
     char* fileName = (char*)kmalloc(100, GFP_KERNEL);
     if (!fileName) {
@@ -148,8 +144,10 @@ int lz4decompression(char* input, int input_len, char* output, int* output_len) 
         kfree(fileName);
         return -ENOMEM;
     }
-    sprintf(fileName, fileNameTemplate, currentIndex);
-    sprintf(fileNamelz4, fileNameTemplatelz4, currentIndex);
+
+    pid_t pid = current->pid;
+    sprintf(fileName, fileNameTemplate, pid);
+    sprintf(fileNamelz4, fileNameTemplatelz4, pid);
 
 #ifdef TEST
     printk(KERN_INFO "[QAT_TEST] fileName: %s\n", fileName);
