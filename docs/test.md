@@ -71,6 +71,16 @@ make insmod
 
 ## 测试结果
 
+我们利用`zramctl`和`/sys/block/<dev>/stat`的实时输出，计算压缩率和测试压缩/解压速度。
+
+利用`zramctl`的参数：`DATA`(当前写入zram的数据大小)，`COMPR`(压缩后数据实际大小) 来计算压缩率：
+$$ RATIO_{compress} = 1 - \frac{COMPR}{DATA} $$
+
+利用`/sys/block/<dev>/stat`的参数：`read I/Os`(总读IO数)，`read ticks`(总的读IO耗费时间)，`write I/Os`(总写IO数)，`write ticks`（总的写IO耗费时间）来计算IO速度：
+$$ \bar{T}_{read} = \frac{N_{IO_{read}}}{N_{tick_{read}}} $$
+
+$$ \bar{T}_{write} = \frac{N_{IO_{write}}}{N_{tick_{write}}} $$
+
 | 测试项 | 测试结果 |
 | ---- | ----- |
 | qzram的平均压缩率 | 0.90442 |
